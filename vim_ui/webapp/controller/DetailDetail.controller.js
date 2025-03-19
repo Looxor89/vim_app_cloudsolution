@@ -840,7 +840,8 @@ sap.ui.define([
         "GrantID": oData? oData.GrantID : null,
         "ProfitabilitySegment": oData? oData.ProfitabilitySegment : null,
         "BudgetPeriod": oData? oData.BudgetPeriod : null,
-        "WBSElement": oData? oData.WBSElem : null
+        "WBSElement": oData? oData.WBSElem : null,
+        "AccountAssignmentNumber": oData? oData.AccountAssignmentNumber : null
       });
       oDetailDetailModel.setProperty("/currentInvoice/PORecords", aPORecords);
     },
@@ -2369,6 +2370,7 @@ sap.ui.define([
           "GrantID": retrievedData.GrantID != "" ? retrievedData.GrantID : null,
           "ProfitabilitySegment": retrievedData.ProfitabilitySegment_2 != "" ? retrievedData.ProfitabilitySegment_2 : null,
           "BudgetPeriod": retrievedData.BudgetPeriod != "" ? retrievedData.BudgetPeriod : null,
+          "AccountAssignmentNumber": retrievedData.AccountAssignmentNumber !== "" ? retrievedData.AccountAssignmentNumber : null,
         };
         // this._addPORow(oData);
         // aNewSelectedPurchaseOrdersRecords.push(oData);
