@@ -126,8 +126,7 @@
                                                                         scale: 3
                                                                     }
                                                     }" editable="false"
-                                                    type="Number" description="{appmodel>/detailDetail/header/currencyCode/value}" 
-                                                    placeholder="0.00"/>
+                                                    placeholder="0"/>
 
                                                 <m:Label text="{i18n>SupplierPostingLineItemText}" />
                                                 <m:Input id="idSupplierPostingLineItemText" value="{detailDetailModel>/currentInvoice/SupplierPostingLineItemText}" change=".onChangeSupplierPostingLineItemText" maxLength="50"/>
