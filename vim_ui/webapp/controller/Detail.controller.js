@@ -8,12 +8,15 @@ sap.ui.define([
   var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";
   //manifest base URL
   var baseManifestUrl;
+  var oBundle;
   var indexOfCurrentAttachment;
 
   return BaseController.extend("vim_ui.controller.Detail", {
     formatter: formatter,
 
     onInit: function () {
+      // read msg from i18n model
+      oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
       //set manifest base URL
       baseManifestUrl = jQuery.sap.getModulePath(this.getOwnerComponent().getMetadata().getManifest()["sap.app"].id);
       indexOfCurrentAttachment = 0;
