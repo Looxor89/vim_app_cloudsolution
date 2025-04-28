@@ -354,7 +354,7 @@
                                                 <Table id="idInvLineItemTable" rows="{
                                                         path: 'detailDetailModel>/currentInvoice/PORecords',
                                                         sorter: {
-                                                            path: 'Name'
+                                                            path: 'lineNumber'
                                                         }
                                                     }" class="sapUiSmallMargin"
                                                         rowSelectionChange="onSelectionPOChange"
@@ -561,7 +561,10 @@
                                             </m:IconTabFilter>
                                             <m:IconTabFilter text="{i18n>GLAccount}" count="{= ${detailDetailModel>/currentInvoice/GLAccountRecords/length}}">
                                                 <Table id="idNPOInvGLAccountLineTable" rows="{
-                                                        path: 'detailDetailModel>/currentInvoice/GLAccountRecords'
+                                                        path: 'detailDetailModel>/currentInvoice/GLAccountRecords',
+                                                        sorter: {
+                                                            path: 'lineNumber'
+                                                        }
                                                     }" class="sapUiSmallMargin"
                                                         rowSelectionChange="onSelectionGLAccountChange"
                                                         selectionMode="None">
