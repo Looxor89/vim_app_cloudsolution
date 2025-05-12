@@ -798,13 +798,21 @@ sap.ui.define([
     _addPORow: function (oData) {
       var oDetailDetailModel = this.getView().getModel("detailDetailModel"),
         oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice"),
+        lineNumber = 0,
         sBodyInvoiceItalianTrace_Id = oCurrentInvoice.PORecords.length > 0 ? oCurrentInvoice.PORecords[0].bodyInvoiceItalianTrace_Id : oCurrentInvoice.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
       // Retrieve the PORecords data from the model
       var aPORecords = oDetailDetailModel.getProperty("/currentInvoice/PORecords");
+      aPORecords.forEach(oRecord => {
+        if (oRecord.lineNumber > lineNumber) {
+          lineNumber = oRecord.lineNumber;
+        }
+      });
+      lineNumber++;
       aPORecords.unshift({
         "lineDetail_ID": null,
         "bodyInvoiceItalianTrace_Id": sBodyInvoiceItalianTrace_Id,
         "bodyPOIntegrationInfo_Id": null,
+        "lineNumber": lineNumber,
         "SupplierInvoiceItem": null,
         "PurchaseOrder": oData? oData.PurchaseOrder : null,
         "PurchaseOrderItem": oData? oData.PurchaseOrderItem : null,
@@ -852,15 +860,23 @@ sap.ui.define([
 
     onAddGLAccountRow: function (oEvent) {
       var oDetailDetailModel = this.getView().getModel("detailDetailModel"),
+        lineNumber = 0,
         oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice"),
         sBodyInvoiceItalianTrace_Id = oCurrentInvoice.PORecords.length > 0 ? oCurrentInvoice.PORecords[0].bodyInvoiceItalianTrace_Id : oCurrentInvoice.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
 
       // Retrieve the GLAccountRecords data from the model
       var aGLAccountRecords = oDetailDetailModel.getProperty("/currentInvoice/GLAccountRecords");
+      aGLAccountRecords.forEach(oRecord => {
+        if (oRecord.lineNumber > lineNumber) {
+          lineNumber = oRecord.lineNumber;
+        }
+      });
+      lineNumber++;
       aGLAccountRecords.unshift({
         "lineDetail_ID": null,
         "bodyInvoiceItalianTrace_Id": sBodyInvoiceItalianTrace_Id,
         "bodyGLAccountIntegrationInfo_Id": null,
+        "lineNumber": lineNumber,
         "SupplierInvoiceItem": null,
         "CompanyCode": null,
         "GLAccount": null,
