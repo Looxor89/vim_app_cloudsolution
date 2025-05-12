@@ -51,29 +51,36 @@
                                 </fb:control>
                             </fb:FilterGroupItem>
 
+                            <!-- Invoice Number Filter -->
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="D" label="{i18n>InvoiceNumber}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="idInvoiceNumber" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
                             <!-- Sent By Filter -->
-                            <fb:FilterGroupItem groupName="DefaultGroup" name="D" label="{i18n>VendorName}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="E" label="{i18n>VendorName}" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input id="idSentByInp" />
                                 </fb:control>
                             </fb:FilterGroupItem>
 
                             <!-- Sent By Filter -->
-                            <fb:FilterGroupItem groupName="DefaultGroup" name="E" label="{i18n>VATRegistrationNumber}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="F" label="{i18n>VATRegistrationNumber}" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input id="idVATRegistrationNumber" />
                                 </fb:control>
                             </fb:FilterGroupItem>
 
                             <!-- Assigned To Filter -->
-                            <fb:FilterGroupItem groupName="DefaultGroup" name="F" label="{i18n>AssignedTo}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="G" label="{i18n>AssignedTo}" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input id="idAssignedToInp" />
                                 </fb:control>
                             </fb:FilterGroupItem>
 
                             <!-- Document Category Filter -->
-                            <fb:FilterGroupItem groupName="DefaultGroup" name="G" label="{i18n>DocumentCategory}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="H" label="{i18n>DocumentCategory}" visibleInFilterBar="true">
                                 <fb:control>
                                     <Select id="idSelectDocumentCategory" forceSelection="false" items="{prmodel>/filterProps/DocumentCategory}">
                                         <core:Item key="{prmodel>id}" text="{prmodel>status}" />
@@ -81,8 +88,15 @@
                                 </fb:control>
                             </fb:FilterGroupItem>
 
+                            <!-- Data Between Filter (Date Range) -->
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="I" label="{i18n>DataBetween}" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DateRangeSelection id="idData" displayFormat="long" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
                             <!-- Received Between Filter (Date Range) -->
-                            <fb:FilterGroupItem groupName="DefaultGroup" name="H" label="{i18n>ReceivedBetween}" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="DefaultGroup" name="L" label="{i18n>ReceivedBetween}" visibleInFilterBar="true">
                                 <fb:control>
                                     <DateRangeSelection id="idSentOn" displayFormat="long" />
                                 </fb:control>
@@ -134,8 +148,23 @@
                         <Text text="{i18n>DocumentStatusColumn}" />
                     </Column>
 
-                    <!-- ReceivedOn Column -->
+                    <!-- InvoiceNumber Column -->
                     <Column hAlign="Initial" width="16%">
+                        <Text text="{i18n>InvoiceNumber}" />
+                    </Column>
+
+                    <!-- Data Column -->
+                    <Column hAlign="Initial" width="13%">
+                        <Text text="{i18n>Data}" />
+                    </Column>
+
+                    <!-- TotalAmount Column -->
+                    <Column hAlign="Initial" width="16%">
+                        <Text text="{i18n>TotalAmount}" />
+                    </Column>
+
+                    <!-- ReceivedOn Column -->
+                    <Column hAlign="Initial" width="13%">
                         <Text text="{i18n>ReceivedOn}" />
                     </Column>
 
@@ -160,7 +189,7 @@
                     </Column>
 
                     <!-- Last Changed Column -->
-                    <Column hAlign="Initial" width="17%">
+                    <Column hAlign="Initial" width="13%">
                         <Text text="{i18n>LastChanged}" />
                     </Column>
 
@@ -191,6 +220,26 @@
                                 title="{parts: ['masterModel>DOC_STATUS', 'masterModel>ASSIGNEDTO', 'masterModel>ACTIONBY', 'masterModel>'], formatter: '.formatter.formatDocStatus'}"
                                 text="{parts: ['masterModel>ACTION', 'masterModel>ACTIONBYNAME', 'masterModel>'], formatter: '.formatter.calcStatus'}"
                             />
+                            
+                            <!-- Invoice number -->
+                            <Text text="{masterModel>INVOICENUMBER}" />
+                            
+                            <!-- Data -->
+                            <Text text="{path:'masterModel>DATA', formatter:'.formatter.formatDateString'}" />
+                            
+                            <!-- TotalAmount -->
+                            <Text text="{'path': 'masterModel>IMPORTOTOTALEDOCUMENTO',
+                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                    formatOptions: {
+                                                                        minFractionDigits: 0,
+                                                                        maxFractionDigits: 3,
+                                                                        groupingEnabled: false
+                                                                    },
+                                                                    constraints: {
+                                                                        precision: 14,
+                                                                        scale: 3
+                                                                    }
+                                                                }" />
                             
                             <!-- Received on -->
                             <Text text="{path:'masterModel>CREATEDAT', formatter:'.formatter.formatDateString'}" />
