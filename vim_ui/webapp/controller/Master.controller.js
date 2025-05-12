@@ -78,12 +78,15 @@ sap.ui.define([
             var sAssignedTo = oView.byId("idAssignedToInp").getValue();
             var sDocCategory = oView.byId("idSelectDocumentCategory").getSelectedKey();
             var sVendor = oView.byId("idSentByInp").getValue();
+            var sInvoiceNumber = oView.byId("idInvoiceNumber").getValue();
             var sVAT = oView.byId("idVATRegistrationNumber").getValue();
+            var sDateFrom = oView.byId("idData").getDateValue();
+            var sDateTo = oView.byId("idData").getSecondDateValue();
             var sCreatedDateFrom = oView.byId("idSentOn").getDateValue();
             var sCreatedDateTo = oView.byId("idSentOn").getSecondDateValue();
 
             // Build query URL with parameters
-            var sUrl = this._buildFilterQuery(sDocStatus, sAssignedTo, sDocCategory, sVendor, sVAT, sCreatedDateFrom, sCreatedDateTo);
+            var sUrl = this._buildFilterQuery(sDocStatus, sAssignedTo, sDocCategory, sVendor, sInvoiceNumber, sVAT, sDateFrom, sDateTo, sCreatedDateFrom, sCreatedDateTo);
 
             // Get the master model to update the data list after the request
             var oMasterModel = this.getView().getModel("masterModel");
@@ -111,7 +114,7 @@ sap.ui.define([
         /**
          * Helper method to build the query URL with the given parameters.
          */
-        _buildFilterQuery: function (sDocStatus, sAssignedTo, sDocCategory, sVendor, sVAT, sCreatedDateFrom, sCreatedDateTo) {
+        _buildFilterQuery: function (sDocStatus, sAssignedTo, sDocCategory, sVendor, sInvoiceNumber, sVAT, sDateFrom, sDateTo, sCreatedDateFrom, sCreatedDateTo) {
             var url = baseManifestUrl + "/odata/extended()?";
             var aParams = [];
 
@@ -127,11 +130,17 @@ sap.ui.define([
             if (sVendor) {
                 aParams.push("VENDOR_NAME=" + sVendor);
             }
+            if (sInvoiceNumber) {
+                aParams.push("INVOICENUMBER=" + sInvoiceNumber);
+            }
             if (sVAT) {
                 aParams.push("VAT=" + sVAT);
             }
             if (sCreatedDateFrom || sCreatedDateTo) {
                 aParams.push("CREATEDAT=" + sCreatedDateFrom.toJSON() + "," + sCreatedDateTo.toJSON());
+            }
+            if (sDateFrom || sDateTo) {
+                aParams.push("DATA=" + sDateFrom.toJSON() + "," + sDateTo.toJSON());
             }
 
             aParams.push("$top=" + this._iTop);
@@ -160,9 +169,12 @@ sap.ui.define([
             oView.byId("idAssignedToInp").setValue(null);
             oView.byId("idSelectDocumentCategory").setSelectedKey(null);
             oView.byId("idSentByInp").setValue(null);
+            oView.byId("idInvoiceNumber").setValue(null);
             oView.byId("idVATRegistrationNumber").setValue(null);
             oView.byId("idSentOn").setDateValue(null);
             oView.byId("idSentOn").setSecondDateValue(null);
+            oView.byId("idData").setDateValue(null);
+            oView.byId("idData").setSecondDateValue(null);
         },
 
         /**
