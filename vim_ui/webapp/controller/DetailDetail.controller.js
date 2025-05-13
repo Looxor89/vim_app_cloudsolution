@@ -2182,7 +2182,6 @@ sap.ui.define([
             new Filter("DeliveryQuantityUnit", FilterOperator.Contains, sValue),
             new Filter("BaseUnit", FilterOperator.Contains, sValue),
             new Filter("StockType", FilterOperator.Contains, sValue),
-            new Filter("IsCompletelyDelivered", FilterOperator.Contains, sValue),
             new Filter("CostCenter", FilterOperator.Contains, sValue),
             new Filter("PurchaseOrder", FilterOperator.Contains, sValue),
             new Filter("PurchaseOrderItem", FilterOperator.Contains, sValue)
