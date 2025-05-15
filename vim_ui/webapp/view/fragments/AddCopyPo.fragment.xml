@@ -16,7 +16,7 @@ xmlns="sap.ui.table"
                         visibleRowCount="5">
                     <extension>
                         <m:Toolbar>
-                            <m:Title text="{parts: [{path: 'i18n>To_SelectedDeliveryNotes_InboundDeliveryNote'}, {path: 'detailDetailModel>/currentInvoice/To_SelectedDeliveryNotes/length'}], 
+                            <m:Title text="{parts: [{path: 'i18n>To_SelectedDeliveryNotes_DeliveryDocumentBySupplier'}, {path: 'detailDetailModel>/currentInvoice/To_SelectedDeliveryNotes/length'}], 
                                 formatter: '.formatter.getI18nTextWithCount'}" level="H2" />
                             <m:ToolbarSpacer />
                             <m:Button text="{i18n>AddButton}" press="onAddTo_SelectedDeliveryNotesRow" visible="{detailDetailModel>/props/lineItemTable/editMode}" />
@@ -25,9 +25,9 @@ xmlns="sap.ui.table"
                     </extension>
                     
                     <Column >
-                        <m:Label text="{i18n>To_SelectedDeliveryNotes_InboundDeliveryNote}"/>
+                        <m:Label text="{i18n>To_SelectedDeliveryNotes_DeliveryDocumentBySupplier}"/>
                         <template>
-                            <m:Input value="{detailDetailModel>InboundDeliveryNote}" showValueHelp="true"  valueHelpRequest="onDeliveryNoteRefVH" enabled="{detailDetailModel>/props/lineItemTable/editMode}" change=".onChangeTo_SelectedDeliveryNotes_InboundDeliveryNote" maxLength="16"/>
+                            <m:Input value="{detailDetailModel>DeliveryDocumentBySupplier}" showValueHelp="true"  valueHelpRequest="onDeliveryNoteRefVH" enabled="{detailDetailModel>/props/lineItemTable/editMode}" change=".onChangeTo_SelectedDeliveryNotes_DeliveryDocumentBySupplier" maxLength="16"/>
                         </template>
                     </Column>
                 </Table>

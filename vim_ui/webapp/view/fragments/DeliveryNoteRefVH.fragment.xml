@@ -10,7 +10,9 @@
         <ColumnListItem vAlign="Middle">
             <cells>
                 <ObjectIdentifier
-                    title="{detailDetailModel>InboundDelivery}"/>
+                    title="{detailDetailModel>DeliveryDocumentBySupplier}"/>
+                <Text
+                    text="{detailDetailModel>InboundDelivery}"/>
                 <Text
                     text="{detailDetailModel>InboundDeliveryItem}" />
                 <Text
@@ -52,6 +54,11 @@
             </cells>
         </ColumnListItem>
 		<columns>
+			<Column width="12em">
+				<header>
+					<Text text="{i18n>To_SelectedDeliveryNotes_DeliveryDocumentBySupplier}" />
+				</header>
+			</Column>
 			<Column width="12em">
 				<header>
 					<Text text="{i18n>To_SelectedDeliveryNotes_InboundDeliveryNote}" />

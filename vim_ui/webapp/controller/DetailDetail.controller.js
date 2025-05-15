@@ -628,7 +628,7 @@ sap.ui.define([
       // Retrieve the PORecords data from the model
       var aTo_SelectedDeliveryNotes = oDetailDetailModel.getProperty("/currentInvoice/To_SelectedDeliveryNotes");
       aTo_SelectedDeliveryNotes.push({
-        "InboundDeliveryNote": null
+        "DeliveryDocumentBySupplier": null
       });
       oDetailDetailModel.setProperty("/currentInvoice/To_SelectedDeliveryNotes", aTo_SelectedDeliveryNotes);
     },
@@ -2150,6 +2150,7 @@ sap.ui.define([
       if (sValue) {
         var sFilter = new Filter({
           filters: [
+            new Filter("DeliveryDocumentBySupplier", FilterOperator.Contains, sValue),
             new Filter("InboundDelivery", FilterOperator.Contains, sValue),
             new Filter("InboundDeliveryItem", FilterOperator.Contains, sValue),
             new Filter("CreatedByUser", FilterOperator.Contains, sValue),
@@ -2397,48 +2398,40 @@ sap.ui.define([
 
     onConfirmDeliveryNoteReferement: function (oEvent) {
       var sPath = oEvent.getParameter("selectedItem").getBindingContextPath("detailDetailModel");
-      var sInboundDeliveryRef = this.getView().getModel("detailDetailModel").getProperty(sPath + "/InboundDelivery");
-      var sPoRef = this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrder");
-      var sPoItemRef = this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrderItem");
-      this.oInputDeliveryNoteRefs.setValue(sInboundDeliveryRef);
-      this.oInputDeliveryNoteRefs.fireChangeEvent(sInboundDeliveryRef);
+      var sDeliveryDocumentBySupplier = this.getView().getModel("detailDetailModel").getProperty(sPath + "/DeliveryDocumentBySupplier");
+      var aInboundDeliveries = this.getView().getModel("detailDetailModel").getProperty("/valuehelps/deliveryNoteReferements").filter( (oDelivery) => oDelivery.DeliveryDocumentBySupplier === sDeliveryDocumentBySupplier);
+      this.oInputDeliveryNoteRefs.setValue(sDeliveryDocumentBySupplier);
+      this.oInputDeliveryNoteRefs.fireChangeEvent(sDeliveryDocumentBySupplier);
 
-      var aURL = baseManifestUrl + "/odata/getPOAccountAssignment()?PurchaseOrderRef=" + sPoRef + "&PurchaseOrderItemRef=" + sPoItemRef;
+      var aURL = baseManifestUrl + "/odata/getPOByDeliveryDocumentBySupplier";
+      var body = {
+        payload: {
+          InboundDeliveries: aInboundDeliveries.map(function (oItem) {
+            return {
+              "PurchaseOrder": oItem.PurchaseOrder,
+              "PurchaseOrderItem": oItem.PurchaseOrderItem
+            }
+          })
+        }
+      };
       this.getView().byId('DDPage').setBusy(true);
 
       const oSuccessFunction = (data) => {
-        let retrievedData = data.value[0].result[0];
+        let aResult = data.value[0].result;
         this.getView().byId('DDPage').setBusy(false);
-        if (retrievedData) {
-          let oData = {
-            "PurchaseOrder": this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrder"),
-            "PurchaseOrderItem": this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrderItem"),
-            "Plant": this.getView().getModel("detailDetailModel").getProperty(sPath + "/Plant"),
-            "PurchaseOrderQuantityUnit": this.getView().getModel("detailDetailModel").getProperty(sPath + "/DeliveryQuantityUnit"),
-            "QuantityInPurchaseOrderUnit": this.getView().getModel("detailDetailModel").getProperty(sPath + "/ActualDeliveryQuantity"),
-            "ReferenceDocument": retrievedData.ReferenceDocument != "" ? retrievedData.ReferenceDocument : null,
-            "ReferenceDocumentFiscalYear": retrievedData.ReferenceDocumentFiscalYear != "" ? retrievedData.ReferenceDocumentFiscalYear : null,
-            "ReferenceDocumentItem": retrievedData.ReferenceDocumentItem != "" ? retrievedData.ReferenceDocumentItem : null,
-            "CostCenter": retrievedData.CostCenter != "" ? retrievedData.CostCenter : null,
-            "ControllingArea": retrievedData.ControllingArea != "" ? retrievedData.ControllingArea : null,
-            "BusinessArea": retrievedData.BusinessArea != "" ? retrievedData.BusinessArea : null,
-            "ProfitCenter": retrievedData.ProfitCenter != "" ? retrievedData.ProfitCenter : null,
-            "FunctionalArea": retrievedData.FunctionalArea != "" ? retrievedData.FunctionalArea : null,
-            "WBSElement": retrievedData.WBSElementInternalID_2 != "" ? retrievedData.WBSElementInternalID_2 : null,
-            "SalesOrder": retrievedData.SalesOrder != "" ? retrievedData.SalesOrder : null,
-            "SalesOrderItem": retrievedData.SalesOrderItem != "" ? retrievedData.SalesOrderItem : null,
-            "InternalOrder": retrievedData.OrderInternalID != "" ? retrievedData.OrderInternalID : null,
-            "CommitmentItem": retrievedData.CommitmentItemShortID != "" ? retrievedData.CommitmentItemShortID : null,
-            "FundsCenter": retrievedData.FundsCenter != "" ? retrievedData.FundsCenter : null,
-            "Fund": retrievedData.Fund != "" ? retrievedData.Fund : null,
-            "GrantID": retrievedData.GrantID != "" ? retrievedData.GrantID : null,
-            "ProfitabilitySegment": retrievedData.ProfitabilitySegment_2 != "" ? retrievedData.ProfitabilitySegment_2 : null,
-            "BudgetPeriod": retrievedData.BudgetPeriod != "" ? retrievedData.BudgetPeriod : null,
-          };
-          // this._addPORow(oData);
-          aNewSelectedDeliveryNotesRecords.push(oData);
+        if (aResult.length > 0) {
+          aResult.forEach( retrievedData => {
+            let oData = {
+              "PurchaseOrder": retrievedData.PurchaseOrder != "" ? retrievedData.PurchaseOrder : null,
+              "PurchaseOrderItem": retrievedData.PurchaseOrderItem != "" ? retrievedData.PurchaseOrderItem : null,
+              "TaxCode": retrievedData.TaxCode != "" ? retrievedData.TaxCode : null,
+              "SupplierInvoiceItemAmount": retrievedData.GrossAmount != "" ? retrievedData.GrossAmount : null
+            };
+            // this._addPORow(oData);
+            aNewSelectedDeliveryNotesRecords.push(oData);
+          })
         } else {
-          MessageBox.warning(oBundle.getText("NoDataFoundForPurchaseOrderAndPurchaseOrderItem", [this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrder"), this.getView().getModel("detailDetailModel").getProperty(sPath + "/PurchaseOrderItem")]));
+          MessageBox.warning(oBundle.getText("NoDataFoundForTheSelectedExternalDeliveryId", [sDeliveryDocumentBySupplier]));
         }
       }
 
@@ -2449,7 +2442,7 @@ sap.ui.define([
         console.log(errorThrown);
       };
 
-      return this.executeRequest(aURL, 'GET', null, oSuccessFunction, oErrorFunction);
+      return this.executeRequest(aURL, 'POST', JSON.stringify(body), oSuccessFunction, oErrorFunction);
     },
 
 
@@ -5088,8 +5081,8 @@ sap.ui.define([
       this._onChangeEventHandler(oEvent, "/PurchaseOrderItem");
     },
 
-    onChangeTo_SelectedDeliveryNotes_InboundDeliveryNote: function (oEvent) {
-      this._onChangeEventHandler(oEvent, "/InboundDeliveryNote");
+    onChangeTo_SelectedDeliveryNotes_DeliveryDocumentBySupplier: function (oEvent) {
+      this._onChangeEventHandler(oEvent, "/DeliveryDocumentBySupplier");
     },
 
     onChangeTo_SelectedServiceEntrySheets_ServiceEntrySheet: function (oEvent) {
