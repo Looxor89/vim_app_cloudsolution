@@ -28,6 +28,7 @@ sap.ui.define([
   var aNewSelectedPurchaseOrdersRecords;
   var aNewSelectedDeliveryNotesRecords;
   var aNewSelectedServiceEntrySheetsRecords;
+  var sBodyInvoiceItalianTrace_Id;
 
   return BaseController.extend("vim_ui.controller.DetailDetail", {
     formatter: formatter,
@@ -797,8 +798,7 @@ sap.ui.define([
 
     _addPORow: function (oData) {
       var oDetailDetailModel = this.getView().getModel("detailDetailModel"),
-        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice"),
-        sBodyInvoiceItalianTrace_Id = oCurrentInvoice.PORecords.length > 0 ? oCurrentInvoice.PORecords[0].bodyInvoiceItalianTrace_Id : oCurrentInvoice.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
+        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice");
       // Retrieve the PORecords data from the model
       var aPORecords = oDetailDetailModel.getProperty("/currentInvoice/PORecords");
       aPORecords.unshift({
@@ -852,8 +852,7 @@ sap.ui.define([
 
     onAddGLAccountRow: function (oEvent) {
       var oDetailDetailModel = this.getView().getModel("detailDetailModel"),
-        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice"),
-        sBodyInvoiceItalianTrace_Id = oCurrentInvoice.PORecords.length > 0 ? oCurrentInvoice.PORecords[0].bodyInvoiceItalianTrace_Id : oCurrentInvoice.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
+        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice");
 
       // Retrieve the GLAccountRecords data from the model
       var aGLAccountRecords = oDetailDetailModel.getProperty("/currentInvoice/GLAccountRecords");
@@ -3676,6 +3675,7 @@ sap.ui.define([
             oDetailDetailModel.setProperty("/currentInvoice", record);
             oDetailDetailModel.setProperty("/valuehelps/multiplePOValueHelp", record.PORecords);
           
+            sBodyInvoiceItalianTrace_Id = record.PORecords.length > 0 ? record.PORecords[0].bodyInvoiceItalianTrace_Id : record.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
 
           oDetailDetailModel.setProperty("/props/bMultiplePO", bMultiplePO);
           if (bMultiplePO) {
