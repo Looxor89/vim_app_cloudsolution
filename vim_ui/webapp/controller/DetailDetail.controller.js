@@ -3692,7 +3692,20 @@ sap.ui.define([
             oDetailDetailModel.setProperty("/currentInvoice", record);
             oDetailDetailModel.setProperty("/valuehelps/multiplePOValueHelp", record.PORecords);
           
+          if (record.PORecords.length > 0 || record.GLAccountRecords.length > 0) {
             sBodyInvoiceItalianTrace_Id = record.PORecords.length > 0 ? record.PORecords[0].bodyInvoiceItalianTrace_Id : record.GLAccountRecords[0].bodyInvoiceItalianTrace_Id;
+          } else {
+            var sURL = baseManifestUrl + "/odata/getBodyId()?headerId=" + record.header_Id_ItalianInvoiceTrace;
+            const oSuccessFunction = (data) => {
+              sBodyInvoiceItalianTrace_Id = data.value[0].ID;
+            };
+      
+            const oErrorFunction = (XMLHttpRequest, textStatus, errorThrown) => {
+              console.log(errorThrown);  // Log the error
+            };
+            
+            this.executeRequest(sURL, 'GET', null, oSuccessFunction, oErrorFunction);
+          }
 
           oDetailDetailModel.setProperty("/props/bMultiplePO", bMultiplePO);
           if (bMultiplePO) {
@@ -3722,6 +3735,7 @@ sap.ui.define([
           return (record);
         } catch (error) {
           console.log(error);
+          // Display an error message to the user indicating that there was an issue loading the invoice data
           MessageBox.error(oBundle.getText("ErrorLoadingInvoiceData"));
         }
       };
