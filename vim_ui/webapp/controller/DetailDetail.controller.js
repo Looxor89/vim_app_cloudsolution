@@ -820,7 +820,7 @@ sap.ui.define([
         "QuantityInPurchaseOrderUnit": oData? oData.QuantityInPurchaseOrderUnit : null,
         "QtyInPurchaseOrderPriceUnit": null,
         "PurchaseOrderPriceUnit": null,
-        "SupplierInvoiceItemText": null,
+        "SupplierInvoiceItemText": oData? oData.SupplierInvoiceItemText : null,
         "IsNotCashDiscountLiable": null,
         "ServiceEntrySheet": oData? oData.ServiceEntrySheet : null,
         "ServiceEntrySheetItem": oData? oData.ServiceEntrySheetItem : null,
@@ -2408,6 +2408,7 @@ sap.ui.define([
         payload: {
           InboundDeliveries: aInboundDeliveries.map(function (oItem) {
             return {
+              "DeliveryDocumentBySupplier": oItem.DeliveryDocumentBySupplier,
               "PurchaseOrder": oItem.PurchaseOrder,
               "PurchaseOrderItem": oItem.PurchaseOrderItem
             }
@@ -2421,11 +2422,15 @@ sap.ui.define([
         this.getView().byId('DDPage').setBusy(false);
         if (aResult.length > 0) {
           aResult.forEach( retrievedData => {
+            let oInboundDelivery = aInboundDeliveries.find(item => item.PurchaseOrder === retrievedData.PurchaseOrder && item.PurchaseOrderItem === retrievedData.PurchaseOrderItem.padStart(5, "0"));
             let oData = {
               "PurchaseOrder": retrievedData.PurchaseOrder != "" ? retrievedData.PurchaseOrder : null,
               "PurchaseOrderItem": retrievedData.PurchaseOrderItem != "" ? retrievedData.PurchaseOrderItem : null,
-              "TaxCode": retrievedData.TaxCode != "" ? retrievedData.TaxCode : null,
-              "SupplierInvoiceItemAmount": retrievedData.GrossAmount != "" ? retrievedData.GrossAmount : null
+              "Plant": oInboundDelivery.Plant != "" ? oInboundDelivery.Plant : null,
+              "QuantityInPurchaseOrderUnit": oInboundDelivery.ActualDeliveryQuantity != "" ? oInboundDelivery.ActualDeliveryQuantity : null,
+              "PurchaseOrderQuantityUnit": oInboundDelivery.BaseUnit != "" ? oInboundDelivery.BaseUnit : null,
+              "SupplierInvoiceItemText": oInboundDelivery.DeliveryDocumentItemText != "" ? oInboundDelivery.DeliveryDocumentItemText : null,
+              "SupplierInvoiceItemAmount": retrievedData.PurchaseOrderAmount != "" ? retrievedData.PurchaseOrderAmount : null
             };
             // this._addPORow(oData);
             aNewSelectedDeliveryNotesRecords.push(oData);
