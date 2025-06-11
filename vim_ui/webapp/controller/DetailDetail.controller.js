@@ -3689,6 +3689,11 @@ sap.ui.define([
             oApProcessModel = this.getOwnerComponent().getModel("ApProcessModel");
             oDetailDetailModel.setProperty("/errorLog", record.ErrorLog);
             delete record.ErrorLog
+            
+            if (oDetailDetailModel.getProperty("/detail/header/DOC_STATUS") !== 'POSTED') {
+              record.PostingDate = this.getCurrentDate();
+            }
+
             oDetailDetailModel.setProperty("/currentInvoice", record);
             oDetailDetailModel.setProperty("/valuehelps/multiplePOValueHelp", record.PORecords);
           

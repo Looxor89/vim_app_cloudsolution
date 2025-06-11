@@ -125,7 +125,7 @@
                                                                         precision: 14,
                                                                         scale: 3
                                                                     }
-                                                    }" editable="false"
+                                                    }" editable="true"
                                                     placeholder="0"/>
 
                                                 <m:Label text="{i18n>SupplierPostingLineItemText}" />
