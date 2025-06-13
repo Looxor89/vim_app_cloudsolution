@@ -5312,6 +5312,7 @@ sap.ui.define([
       delete oCurrentInvoice.To_SelectedPurchaseOrders;
       delete oCurrentInvoice.To_SelectedDeliveryNotes;
       delete oCurrentInvoice.To_SelectedServiceEntrySheets;
+      delete oCurrentInvoice.AmountSummary;
       // Build the request payload
       body = {
         payload: {
@@ -5427,6 +5428,7 @@ sap.ui.define([
 
       // Retrieve the current invoice data from the model
       var oCurrentInvoice = this.getView().getModel("detailDetailModel").getProperty("/currentInvoice");
+      delete oCurrentInvoice.AmountSummary;
       // Build the request payload
       body = {
         payload: {

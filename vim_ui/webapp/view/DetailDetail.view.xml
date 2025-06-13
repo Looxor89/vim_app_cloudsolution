@@ -341,6 +341,93 @@
                                                      </columns>
                                                 </Table>
 
+                                                
+                                                <core:Title text="{i18n>AmountSummary}" />
+
+                                                <Table id="idAmountSummary" rows="{
+                                                        path: 'detailDetailModel>/currentInvoice/AmountSummary/Summary'
+                                                    }" class="sapUiNoMargin"
+                                                        visibleRowCount="5"
+                                                        selectionMode="None">
+                                                        
+                                                    <columns>
+                                                        <Column >
+                                                            <m:Label text="{i18n>NetAmount}" />
+                                                            <template>
+                                                                <m:Input  
+                                                                    value="{
+                                                                        'path': 'detailDetailModel>NetAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 0,
+                                                                                        maxFractionDigits: 3,
+                                                                                        groupingEnabled: false
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }
+                                                                    }"
+                                                                placeholder="0" />
+                                                            </template>
+                                                        </Column>
+                                                        <Column >
+                                                            <m:Label text="{i18n>TaxCode}" />
+                                                            <template>
+                                                                <m:Input value="{detailDetailModel>TaxCode}" />
+                                                            </template>
+                                                        </Column>
+                                                        <Column >
+                                                            <m:Label text="{i18n>TaxAmount}" />
+                                                            <template>
+                                                                <m:Input  
+                                                                    value="{
+                                                                        'path': 'detailDetailModel>TaxAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 0,
+                                                                                        maxFractionDigits: 3,
+                                                                                        groupingEnabled: false
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }
+                                                                    }"
+                                                                placeholder="0" />
+                                                            </template>
+                                                        </Column>
+                                                        <Column >
+                                                            <m:Label text="{i18n>GrossAmount}" />
+                                                            <template>
+                                                                <m:Input  
+                                                                    value="{
+                                                                        'path': 'detailDetailModel>GrossAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 0,
+                                                                                        maxFractionDigits: 3,
+                                                                                        groupingEnabled: false
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }
+                                                                    }"
+                                                                placeholder="0" />
+                                                            </template>
+                                                        </Column>
+                                                     </columns>
+                                                </Table>
+                                                
+                                                <m:Label text="{i18n>TotalNetAmount}" />
+                                                <m:Input id="idTotalNetAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalNetAmount}" editable="false" />
+                                                
+                                                <m:Label text="{i18n>TotalTaxAmount}" />
+                                                <m:Input id="idTotalTaxAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalTaxAmount}" editable="false" />
+
+                                                <m:Label text="{i18n>TotalGrossAmount}" />
+                                                <m:Input id="idTotalGrossAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalGrossAmount}" editable="false" />
                                             </form:content>
                                         </form:SimpleForm>
                                     </l:BlockLayoutCell>
