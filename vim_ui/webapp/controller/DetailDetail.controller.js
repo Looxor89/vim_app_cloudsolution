@@ -860,7 +860,8 @@ sap.ui.define([
 
     onAddGLAccountRow: function (oEvent) {
       var oDetailDetailModel = this.getView().getModel("detailDetailModel"),
-        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice");
+        oCurrentInvoice = oDetailDetailModel.getProperty("/currentInvoice"),
+        lineNumber = 0;
 
       // Retrieve the GLAccountRecords data from the model
       var aGLAccountRecords = oDetailDetailModel.getProperty("/currentInvoice/GLAccountRecords");
