@@ -112,20 +112,22 @@
                                                 <m:Input id="idSupplierInvoiceIDByInvcgParty" value="{detailDetailModel>/currentInvoice/SupplierInvoiceIDByInvcgParty}" change=".onChangeSupplierInvoiceIDByInvcgParty" maxLength="16"/>
                                                 
                                                 <m:Label text="{i18n>GrossAmount}" required="true"/>
-                                                <m:Input id="idGrossAmt" 
+                                                <m:Input id="idGrossAmt"
                                                     value="{
-                                                        'path': 'detailDetailModel>/currentInvoice/InvoiceGrossAmount',
-                                                                    type: 'sap.ui.model.odata.type.Decimal',
-                                                                    formatOptions: {
-                                                                        minFractionDigits: 0,
-                                                                        maxFractionDigits: 3,
-                                                                        groupingEnabled: false
-                                                                    },
-                                                                    constraints: {
-                                                                        precision: 14,
-                                                                        scale: 3
-                                                                    }
-                                                    }" editable="true"
+                                                        path: 'detailDetailModel>/currentInvoice/InvoiceGrossAmount',
+                                                        type: 'sap.ui.model.odata.type.Decimal',
+                                                        formatOptions: {
+                                                            style: 'standard',
+                                                            minFractionDigits: 2,
+                                                            maxFractionDigits: 2,
+                                                            groupingEnabled: true
+                                                        },
+                                                        constraints: {
+                                                            precision: 14,
+                                                            scale: 3
+                                                        }
+                                                    }"
+                                                    editable="true"
                                                     placeholder="0"/>
 
                                                 <m:Label text="{i18n>SupplierPostingLineItemText}" />
@@ -251,9 +253,9 @@
                                                     'path': 'detailDetailModel>/currentInvoice/UnplannedDeliveryCost',
                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                     formatOptions: {
-                                                        minFractionDigits: 0,
-                                                        maxFractionDigits: 3,
-                                                        groupingEnabled: false
+                                                        minFractionDigits: 2,
+                                                        maxFractionDigits: 2,
+                                                        groupingEnabled: true
                                                     },
                                                     constraints: {
                                                         precision: 14,
@@ -327,9 +329,9 @@
                                                                     'path': 'detailDetailModel>WithholdingTaxBaseAmount',
                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                     formatOptions: {
-                                                                        minFractionDigits: 0,
-                                                                        maxFractionDigits: 3,
-                                                                        groupingEnabled: false
+                                                                        minFractionDigits: 2,
+                                                                        maxFractionDigits: 2,
+                                                                        groupingEnabled: true
                                                                     },
                                                                     constraints: {
                                                                         precision: 16,
@@ -359,9 +361,9 @@
                                                                         'path': 'detailDetailModel>NetAmount',
                                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                                     formatOptions: {
-                                                                                        minFractionDigits: 0,
-                                                                                        maxFractionDigits: 3,
-                                                                                        groupingEnabled: false
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
                                                                                     },
                                                                                     constraints: {
                                                                                         precision: 14,
@@ -385,9 +387,9 @@
                                                                         'path': 'detailDetailModel>TaxAmount',
                                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                                     formatOptions: {
-                                                                                        minFractionDigits: 0,
-                                                                                        maxFractionDigits: 3,
-                                                                                        groupingEnabled: false
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
                                                                                     },
                                                                                     constraints: {
                                                                                         precision: 14,
@@ -405,9 +407,9 @@
                                                                         'path': 'detailDetailModel>GrossAmount',
                                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                                     formatOptions: {
-                                                                                        minFractionDigits: 0,
-                                                                                        maxFractionDigits: 3,
-                                                                                        groupingEnabled: false
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
                                                                                     },
                                                                                     constraints: {
                                                                                         precision: 14,
@@ -421,13 +423,43 @@
                                                 </Table>
                                                 
                                                 <m:Label text="{i18n>TotalNetAmount}" />
-                                                <m:Input id="idTotalNetAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalNetAmount}" editable="false" />
+                                                <m:Input id="idTotalNetAmount" value="{'path': 'detailDetailModel>/currentInvoice/AmountSummary/TotalNetAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }}" editable="false" />
                                                 
                                                 <m:Label text="{i18n>TotalTaxAmount}" />
-                                                <m:Input id="idTotalTaxAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalTaxAmount}" editable="false" />
+                                                <m:Input id="idTotalTaxAmount" value="{'path': 'detailDetailModel>/currentInvoice/AmountSummary/TotalTaxAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }}" editable="false" />
 
                                                 <m:Label text="{i18n>TotalGrossAmount}" />
-                                                <m:Input id="idTotalGrossAmount" value="{detailDetailModel>/currentInvoice/AmountSummary/TotalGrossAmount}" editable="false" />
+                                                <m:Input id="idTotalGrossAmount" value="{'path': 'detailDetailModel>/currentInvoice/AmountSummary/TotalGrossAmount',
+                                                                                    type: 'sap.ui.model.odata.type.Decimal',
+                                                                                    formatOptions: {
+                                                                                        minFractionDigits: 2,
+                                                                                        maxFractionDigits: 2,
+                                                                                        groupingEnabled: true
+                                                                                    },
+                                                                                    constraints: {
+                                                                                        precision: 14,
+                                                                                        scale: 3
+                                                                                    }}" editable="false" />
                                             </form:content>
                                         </form:SimpleForm>
                                     </l:BlockLayoutCell>
@@ -488,9 +520,9 @@
                                                                     path: 'detailDetailModel>SupplierInvoiceItemAmount',
                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                     formatOptions: {
-                                                                        minFractionDigits: 0,
-                                                                        maxFractionDigits: 3,
-                                                                        groupingEnabled: false
+                                                                        minFractionDigits: 2,
+                                                                        maxFractionDigits: 2,
+                                                                        groupingEnabled: true
                                                                     },
                                                                     constraints: {
                                                                         precision: 14,
@@ -690,9 +722,9 @@
                                                                     path: 'detailDetailModel>SupplierInvoiceItemAmount',
                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                     formatOptions: {
-                                                                        minFractionDigits: 0,
-                                                                        maxFractionDigits: 3,
-                                                                        groupingEnabled: false
+                                                                        minFractionDigits: 2,
+                                                                        maxFractionDigits: 2,
+                                                                        groupingEnabled: true
                                                                     },
                                                                     constraints: {
                                                                         precision: 14,

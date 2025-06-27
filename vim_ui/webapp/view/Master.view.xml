@@ -231,9 +231,9 @@
                             <Text text="{'path': 'masterModel>IMPORTOTOTALEDOCUMENTO',
                                                                     type: 'sap.ui.model.odata.type.Decimal',
                                                                     formatOptions: {
-                                                                        minFractionDigits: 0,
-                                                                        maxFractionDigits: 3,
-                                                                        groupingEnabled: false
+                                                                        minFractionDigits: 2,
+                                                                        maxFractionDigits: 2,
+                                                                        groupingEnabled: true
                                                                     },
                                                                     constraints: {
                                                                         precision: 14,

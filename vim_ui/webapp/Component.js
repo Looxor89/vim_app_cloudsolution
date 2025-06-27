@@ -28,6 +28,8 @@ sap.ui.define([
 
             var oModel = new JSONModel();
             this.setModel(oModel);
+            
+            sap.ui.getCore().getConfiguration().setLanguage("it-IT");
 
             // set appmodel demo model on this sample
             var oAppdata = new JSONModel(jQuery.sap.getModulePath("vim_ui", "/json/appdata.json"));
